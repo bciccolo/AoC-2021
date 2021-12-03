@@ -31,6 +31,7 @@ def part1():
         else:
             epsilon = epsilon + pow(2, DIGITS - i - 1)
 
+    # Calculate the product and print the results
     print(gamma)
     print(epsilon)
     product = gamma * epsilon
