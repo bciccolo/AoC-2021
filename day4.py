@@ -15,6 +15,7 @@ def calculate_score(board):
 
     return score
 
+
 def check_winner(board):
     # Check rows
     for row in board:
@@ -92,4 +93,24 @@ def part1():
                 return
 
 
+def part2():
+    global boards, numbers
+
+    load_data()
+
+    for number in numbers:
+        for i in range(len(boards)):
+            update_board(boards[i], number)
+            score = calculate_score(boards[i])
+
+        boards = [board for board in boards if not check_winner(board)]
+        if len(boards) == 0:
+            final = score * number;
+            print(score)
+            print(number)
+            print('Part 2: ' + str(final))
+            break
+
+
 part1()
+part2()
