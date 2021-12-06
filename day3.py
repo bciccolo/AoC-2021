@@ -5,18 +5,6 @@ one_counts = []
 zero_counts = []
 
 
-def load_numbers():
-    numbers = []
-
-    file = open(FILE_NAME, 'r')
-    lines = file.readlines()
-
-    for line in lines:
-        numbers.append(line.strip())
-
-    return numbers
-
-
 def analyze_digits(numbers):
     global one_counts, zero_counts
 
@@ -41,26 +29,6 @@ def analyze_digits(numbers):
             else:
                 zero_counts[index] = zero_counts[index] + 1
             index = index + 1
-
-
-def part1():
-    numbers = load_numbers()
-    analyze_digits(numbers)
-
-    # Compare the counts to calculate the gamma and epsilon values
-    gamma = 0
-    epsilon = 0
-    for i in range(DIGITS):
-        if one_counts[i] > zero_counts[i]:
-            gamma = gamma + pow(2, DIGITS - i - 1)
-        else:
-            epsilon = epsilon + pow(2, DIGITS - i - 1)
-
-    # Calculate the product and print the results
-    print(gamma)
-    print(epsilon)
-    product = gamma * epsilon
-    print('Part 1: ' + str(product))
 
 
 def get_rating(type):
@@ -95,6 +63,38 @@ def get_rating(type):
             decimal = decimal + pow(2, DIGITS - i - 1)
 
     return decimal
+
+
+def load_numbers():
+    numbers = []
+
+    file = open(FILE_NAME, 'r')
+    lines = file.readlines()
+
+    for line in lines:
+        numbers.append(line.strip())
+
+    return numbers
+
+
+def part1():
+    numbers = load_numbers()
+    analyze_digits(numbers)
+
+    # Compare the counts to calculate the gamma and epsilon values
+    gamma = 0
+    epsilon = 0
+    for i in range(DIGITS):
+        if one_counts[i] > zero_counts[i]:
+            gamma = gamma + pow(2, DIGITS - i - 1)
+        else:
+            epsilon = epsilon + pow(2, DIGITS - i - 1)
+
+    # Calculate the product and print the results
+    print(gamma)
+    print(epsilon)
+    product = gamma * epsilon
+    print('Part 1: ' + str(product))
 
 
 def part2():
