@@ -21,9 +21,11 @@ def part1():
 
 
 def part2():
-    # Part 2 seems simple: just change MAX_DAYS to 256. Except it won't ever finish - the
-    # simulate() algorithm grows exponentially! A new algorithm is needed instead. Rather
-    # than tracking each fish independently, we'll group them into age "buckets"
+    # Part 2 seems simple: just change MAX_DAYS to 256. Except it won't ever finish - the simulate()
+    # algorithm grows exponentially! A new algorithm is needed instead. Rather than tracking each
+    # fish independently, we'll group them into age "buckets". (In hindsight it would have been
+    # easier to solve part 1 this way...)
+
     counts_by_age = [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] # Ages 0-8 days
     file = open(FILE_NAME, 'r')
     for fish in file.readlines()[0].strip().split(','):
