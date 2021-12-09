@@ -6,6 +6,25 @@ CHECKED = -1
 height_map = []
 
 
+def calculate_basin_size(x, y):
+    global height_map
+
+    if (x < 0 or
+        x > len(height_map[0]) - 1 or
+        y < 0 or
+        y > len(height_map) - 1 or
+        height_map[y][x] == BORDER or
+        height_map[y][x] == CHECKED):
+        return 0
+
+    height_map[y][x] = CHECKED
+
+    return (1 +
+            calculate_basin_size(x + 1, y) +
+            calculate_basin_size(x - 1, y) +
+            calculate_basin_size(x, y + 1) +
+            calculate_basin_size(x, y - 1))
+
 def load_data():
     global height_map
 
@@ -19,6 +38,21 @@ def load_data():
         height_map.append(row)
 
     # print(height_map)
+
+
+def find_basin_sizes():
+    basin_sizes = []
+
+    for y in range(len(height_map)):
+        for x in range(len(height_map[0])):
+            height = height_map[y][x]
+            if height != BORDER and height != CHECKED:
+                # print('Checking a basin... ')
+                size = calculate_basin_size(x, y)
+                # print('size: ' + str(size))
+                basin_sizes.append(size)
+
+    return basin_sizes
 
 
 def find_low_points():
@@ -110,9 +144,11 @@ def part1():
 def part2():
     load_data()
 
-    # basin_sizes = find_basin_sizes()
+    basin_sizes = sorted(find_basin_sizes(), reverse=True)
 
-    print('Part 2: ' + str(0))
+    answer = basin_sizes[0] * basin_sizes[1] * basin_sizes[2]
+
+    print('Part 2: ' + str(answer))
 
 
 part1()
