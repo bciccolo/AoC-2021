@@ -1,6 +1,26 @@
-FILE_NAME = 'day12-small.dat'
+FILE_NAME = 'day12.dat'
 
 graph = {}
+
+
+def count_paths(start, visited, this_path):
+    connections = graph.get(start)
+
+    paths = 0
+
+    for node in connections:
+        if node == 'end':
+            this_path.append(node)
+            # print(this_path)
+            paths = paths + 1
+        elif node != node.lower() or node not in visited:
+            this_path_copy = this_path.copy()
+            this_path_copy.append(node)
+            visited_copy = visited.copy()
+            visited_copy.add(node)
+            paths = paths + count_paths(node, visited_copy, this_path_copy)
+
+    return paths
 
 
 def load_data():
@@ -30,7 +50,7 @@ def load_data():
             connections = [ endpoints[0] ]
             graph[endpoints[1]] = connections
 
-    print(graph)
+    # print(graph)
 
 
 def part1():
@@ -38,7 +58,9 @@ def part1():
 
     load_data()
 
-    paths = 0
+    visited = set()
+    visited.add('start')
+    paths = count_paths('start', visited, ['start'])
 
     print('Part 1: ' + str(paths))
 
