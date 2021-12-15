@@ -83,7 +83,8 @@ def grow_polymer_improved(steps):
 
         counts = next_generation
 
-    print(counts)
+    # for key, value in counts.items():
+    #     print(key + ': ' + str(value))
 
     return counts
 
@@ -92,6 +93,8 @@ def part1():
     load_data()
     grow_polymer(10)
     counts_by_element = analyze_elements()
+
+    # print(counts_by_element)
 
     sorted_counts = list(counts_by_element.values())
     sorted_counts.sort()
@@ -120,13 +123,21 @@ def part2():
         else:
             counts_by_element[element_2] = counts_by_element[element_2] + count
 
-    print(counts_by_element)
+    # This strategy for counting the elements will result in each value being double (since the
+    # "grow" function returns counts for pairs of elements). The count for the first and last
+    # letters in the original polymer string will be counted once less since there's no element
+    # before the first or after the last. We need to add one to that total.
+    first_letter = polymer_string[0]
+    counts_by_element[first_letter] = counts_by_element[first_letter] + 1
+
+    last_letter = polymer_string[len(polymer_string) - 1]
+    counts_by_element[last_letter] = counts_by_element[last_letter] + 1
+
+    # print(counts_by_element)
 
     sorted_counts = list(counts_by_element.values())
     sorted_counts.sort()
 
-    # Not sure why this result ends in xxx.5; even less sure why the answer for the sample data
-    # is rounded UP but the answer for my full data set is rounded DOWN. I'll take it.
     results = (sorted_counts[len(sorted_counts) - 1] - sorted_counts[0]) / 2
 
     print('Part 2: ' + str(results))
